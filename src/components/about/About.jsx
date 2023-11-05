@@ -1,7 +1,7 @@
 import React from "react";
 import "./about.css";
 import profile_picture from "../../assets/img.png";
-import { FaAward } from "react-icons/fa";
+// import { FaAward } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { VscFolderLibrary } from "react-icons/vsc";
 
@@ -36,11 +36,11 @@ const About = () => {
                 and Counting
               </small>
             </article>
-            <article className="about__card">
+            {/* <article className="about__card">
               <FaAward className="about__icon" />
               <h5>Experience</h5>
               <small>Complete Web Development Course With Jhankar Mahbub</small>
-            </article>
+            </article> */}
           </div>
           <p>
             Hello there! 👋 I'm Md Minhaz Uddin, a creative and detail-oriented

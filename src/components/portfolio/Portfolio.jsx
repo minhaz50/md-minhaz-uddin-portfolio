@@ -1,7 +1,7 @@
 import React from "react";
 import "./portfolio.css";
-import IMG1 from "../../assets/gpt3.png";
-import IMG2 from "../../assets/blog.png";
+import IMG1 from "../../assets/gpt-3.jpg";
+import IMG2 from "../../assets/mordern-fitness.jpg";
 import IMG3 from "../../assets/calculator.png";
 import IMG4 from "../../assets/brochure.png";
 import IMG5 from "../../assets/Portfolio3.png";
@@ -11,19 +11,18 @@ const data = [
   {
     id: 1,
     image: IMG1,
-    title: "HTML | CSS| React",
+    title: "HTML | CSS| ReactJs",
     github: "https://github.com/minhaz50/gpt-3",
     demo: "https://mordern-gpt3-site.netlify.app/",
-    brief:
-      "https://www.canva.com/design/DAFapZZx0GI/205p6bLMxmlp8Z4OjkvcMw/view?utm_content=DAFapZZx0GI&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu",
+    brief: "https://github.com/minhaz50/gpt-3/blob/main/README.md",
   },
   {
     id: 2,
     image: IMG2,
-    title: "NextJS | TailwindCSS | GraphQL Blog",
-    github: "https://github.com/Ade-mir/nextjs-blog",
-    demo: "https://musical-puffpuff-ff26f2.netlify.app/",
-    brief: "https://github.com/Ade-mir/nextjs-blog/blob/main/README.md",
+    title: "HTML | CSS | ReactJs | Bootstrap | Firebase",
+    github: "https://github.com/minhaz50/mordern-fitness-care",
+    demo: "https://mordern-fitness-care.netlify.app/",
+    brief: "https://github.com/minhaz50/mordern-fitness-care#readme",
   },
   {
     id: 3,
@@ -74,15 +73,30 @@ const Portfolio = () => {
               </div>
               <h3>{title}</h3>
               <div className="portfolio__item-cta">
-                <a href={github} className="btn">
+                <a
+                  href={github}
+                  target="_blank"
+                  className="btn"
+                  rel="noreferrer"
+                >
                   Github
                 </a>
-                <a href={brief} className="btn">
+                <a
+                  href={brief}
+                  target="_blank"
+                  className="btn"
+                  rel="noreferrer"
+                >
                   Project Brief
                 </a>
               </div>
               <div className="portfolio__item-cta">
-                <a href={demo} className="btn btn-primary">
+                <a
+                  href={demo}
+                  target="_blank"
+                  className="btn btn-primary"
+                  rel="noreferrer"
+                >
                   Live Demo
                 </a>
               </div>
