@@ -2,7 +2,7 @@ import React from "react";
 import "./portfolio.css";
 import IMG1 from "../../assets/gpt-3.jpg";
 import IMG2 from "../../assets/mordern-fitness.jpg";
-import IMG3 from "../../assets/calculator.png";
+import IMG3 from "../../assets/profilecard.jpg";
 import IMG4 from "../../assets/brochure.png";
 import IMG5 from "../../assets/Portfolio3.png";
 import IMG6 from "../../assets/Portfolio4.png";
@@ -27,11 +27,10 @@ const data = [
   {
     id: 3,
     image: IMG3,
-    title: "JavaScript | HTML | CSS Calculator",
-    github: "https://github.com/Ade-mir/javascript-calculator",
-    demo: "https://fabulous-otter-35c137.netlify.app/",
-    brief:
-      "https://github.com/Ade-mir/javascript-calculator/blob/main/README.md",
+    title: "HTML | CSS Profile Card",
+    github: "https://github.com/minhaz50/Profile-Card",
+    demo: "https://profile-card-minhaz.netlify.app/",
+    brief: "https://github.com/minhaz50/Profile-Card/blob/main/README.md",
   },
   {
     id: 4,
