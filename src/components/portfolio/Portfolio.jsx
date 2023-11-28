@@ -3,7 +3,7 @@ import "./portfolio.css";
 import IMG1 from "../../assets/gpt-3.jpg";
 import IMG2 from "../../assets/mordern-fitness.jpg";
 import IMG3 from "../../assets/profilecard.jpg";
-import IMG4 from "../../assets/brochure.png";
+import IMG4 from "../../assets/computer-parts.jpg";
 import IMG5 from "../../assets/Portfolio3.png";
 import IMG6 from "../../assets/Portfolio4.png";
 
@@ -36,26 +36,26 @@ const data = [
     id: 4,
     image: IMG4,
     title: "React Brochure Site",
-    github: "https://github.com/Ade-mir/brochure-site",
-    demo: "https://deluxe-gumption-ef08f4.netlify.app/",
+    github: "https://github.com/minhaz50/computer-parts-client-side",
+    demo: "https://computer-parts-6a196.web.app/",
     brief: "https://github.com/Ade-mir/brochure-site/blob/main/README.md",
   },
-  {
-    id: 5,
-    image: IMG5,
-    title: "JavaScript | HTML | CSS Portfolio",
-    github: "https://github.com/Ade-mir/html-css-js-portfolio-tutorial-2",
-    demo: "https://thriving-dragon-a3fcd9.netlify.app/",
-    brief: "https://youtu.be/ldwlOzRvYOU",
-  },
-  {
-    id: 6,
-    image: IMG6,
-    title: "JavaScript | HTML | CSS Animation Head",
-    github: "https://github.com/Ade-mir/animated-head-portfolio",
-    demo: "https://animated-head-portfolio.netlify.app/",
-    brief: "https://youtu.be/pcFF_IIpMbc",
-  },
+  // {
+  //   id: 5,
+  //   image: IMG5,
+  //   title: "JavaScript | HTML | CSS Portfolio",
+  //   github: "https://github.com/Ade-mir/html-css-js-portfolio-tutorial-2",
+  //   demo: "https://thriving-dragon-a3fcd9.netlify.app/",
+  //   brief: "https://youtu.be/ldwlOzRvYOU",
+  // },
+  // {
+  //   id: 6,
+  //   image: IMG6,
+  //   title: "JavaScript | HTML | CSS Animation Head",
+  //   github: "https://github.com/Ade-mir/animated-head-portfolio",
+  //   demo: "https://animated-head-portfolio.netlify.app/",
+  //   brief: "https://youtu.be/pcFF_IIpMbc",
+  // },
 ];
 
 const Portfolio = () => {
