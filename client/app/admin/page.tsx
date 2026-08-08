@@ -7,6 +7,7 @@ import { Project } from "@/lib/types";
 import LoginForm from "@/components/admin/LoginForm";
 import ProjectForm from "@/components/admin/ProjectForm";
 import ProjectList from "@/components/admin/ProjectList";
+import EditProjectModal from "@/components/admin/EditProjectModal";
 
 const TOKEN_KEY = "portfolio_admin_token";
 
@@ -16,6 +17,7 @@ export default function AdminPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   useEffect(() => {
     setToken(window.localStorage.getItem(TOKEN_KEY));
@@ -35,7 +37,9 @@ export default function AdminPage() {
       const data = await getProjects();
       setProjects(data.projects);
     } catch (err) {
-      setLoadError(err instanceof Error ? err.message : "Failed to load projects.");
+      setLoadError(
+        err instanceof Error ? err.message : "Failed to load projects.",
+      );
     } finally {
       setLoadingProjects(false);
     }
@@ -50,6 +54,10 @@ export default function AdminPage() {
     window.localStorage.removeItem(TOKEN_KEY);
     setToken(null);
     setProjects([]);
+  }
+
+  function handleProjectUpdated(updated: Project) {
+    setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
   }
 
   if (!checkedStorage) {
@@ -70,7 +78,9 @@ export default function AdminPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="path-label mb-3">admin/dashboard</p>
-            <h1 className="text-3xl font-bold text-paper sm:text-4xl">Manage Projects</h1>
+            <h1 className="text-3xl font-bold text-paper sm:text-4xl">
+              Manage Projects
+            </h1>
           </div>
           <button
             onClick={handleLogout}
@@ -84,7 +94,7 @@ export default function AdminPage() {
         <div className="mt-10">
           <ProjectForm
             token={token}
-            onCreated={(project) => setProjects((prev) => [project, ...prev])}
+            onSaved={(project) => setProjects((prev) => [project, ...prev])}
           />
         </div>
 
@@ -103,11 +113,23 @@ export default function AdminPage() {
             <ProjectList
               projects={projects}
               token={token}
-              onDeleted={(id) => setProjects((prev) => prev.filter((p) => p.id !== id))}
+              onEdit={(project) => setEditingProject(project)}
+              onDeleted={(id) =>
+                setProjects((prev) => prev.filter((p) => p.id !== id))
+              }
             />
           )}
         </div>
       </div>
+
+      {editingProject && (
+        <EditProjectModal
+          token={token}
+          project={editingProject}
+          onSaved={handleProjectUpdated}
+          onClose={() => setEditingProject(null)}
+        />
+      )}
     </section>
   );
 }

@@ -70,6 +70,23 @@ export async function createProject(
   return data.project;
 }
 
+export async function updateProject(
+  id: string,
+  input: ProjectInput,
+  token: string,
+): Promise<Project> {
+  const res = await fetch(`${API_BASE}/projects/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(input),
+  });
+  const data = await parseOrThrow(res);
+  return data.project;
+}
+
 export async function deleteProject(id: string, token: string): Promise<void> {
   const res = await fetch(`${API_BASE}/projects/${id}`, {
     method: "DELETE",

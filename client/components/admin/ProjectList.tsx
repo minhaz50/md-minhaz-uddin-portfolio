@@ -1,17 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Loader2, ExternalLink } from "lucide-react";
+import { Trash2, Loader2, ExternalLink, Pencil } from "lucide-react";
 import { deleteProject } from "@/lib/api";
 import { Project } from "@/lib/types";
 
 export default function ProjectList({
   projects,
   token,
+  onEdit,
   onDeleted,
 }: {
   projects: Project[];
   token: string;
+  onEdit: (project: Project) => void;
   onDeleted: (id: string) => void;
 }) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -25,7 +27,9 @@ export default function ProjectList({
       await deleteProject(id, token);
       onDeleted(id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete project.");
+      setError(
+        err instanceof Error ? err.message : "Failed to delete project.",
+      );
     } finally {
       setDeletingId(null);
     }
@@ -49,8 +53,12 @@ export default function ProjectList({
             className="flex flex-col gap-3 rounded-lg border border-surface-border bg-surface px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-paper">{p.name}</p>
-              <p className="mt-0.5 font-mono text-xs text-paper-faint">/{p.slug}</p>
+              <p className="truncate text-sm font-semibold text-paper">
+                {p.name}
+              </p>
+              <p className="mt-0.5 font-mono text-xs text-paper-faint">
+                /{p.slug}
+              </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <a
@@ -62,6 +70,13 @@ export default function ProjectList({
                 <ExternalLink size={13} />
                 View
               </a>
+              <button
+                onClick={() => onEdit(p)}
+                className="inline-flex items-center gap-1.5 rounded-md border border-surface-border px-3 py-1.5 text-xs text-paper-dim transition hover:border-amber hover:text-amber"
+              >
+                <Pencil size={13} />
+                Edit
+              </button>
               <button
                 onClick={() => handleDelete(p.id, p.name)}
                 disabled={deletingId === p.id}
