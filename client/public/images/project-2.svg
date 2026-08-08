@@ -1,0 +1,16 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#161F1B"/>
+  <rect x="0.5" y="0.5" width="799" height="499" fill="none" stroke="#293630"/>
+  <polyline points="60,340 180,260 300,300 420,180 540,220 660,120 740,150" fill="none" stroke="#6FE3B4" stroke-width="4"/>
+  <polyline points="60,380 180,370 300,340 420,350 540,300 660,320 740,290" fill="none" stroke="#FFB454" stroke-width="4"/>
+  <g fill="#293630">
+    <rect x="60" y="410" width="40" height="30"/>
+    <rect x="120" y="395" width="40" height="45"/>
+    <rect x="180" y="380" width="40" height="60"/>
+    <rect x="240" y="400" width="40" height="40"/>
+    <rect x="300" y="370" width="40" height="70"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7C857D" font-size="18">
+    <text x="60" y="80">marketpulse / dashboard.tsx</text>
+  </g>
+</svg>

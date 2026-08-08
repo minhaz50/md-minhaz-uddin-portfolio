@@ -1,0 +1,16 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#161F1B"/>
+  <rect x="0.5" y="0.5" width="799" height="499" fill="none" stroke="#293630"/>
+  <circle cx="220" cy="250" r="110" fill="none" stroke="#FFB454" stroke-width="3" opacity="0.6"/>
+  <circle cx="220" cy="250" r="70" fill="none" stroke="#6FE3B4" stroke-width="3" opacity="0.6"/>
+  <g fill="#293630">
+    <rect x="440" y="140" width="300" height="20" rx="4"/>
+    <rect x="440" y="180" width="260" height="20" rx="4"/>
+    <rect x="440" y="220" width="280" height="20" rx="4"/>
+    <rect x="440" y="260" width="200" height="20" rx="4"/>
+    <rect x="440" y="300" width="240" height="20" rx="4"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7C857D" font-size="18">
+    <text x="60" y="440">recipebox / recipe-card.tsx</text>
+  </g>
+</svg>

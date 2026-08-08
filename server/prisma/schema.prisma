@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Neon: use a pooled connection for the app and a direct one for migrations
+  directUrl = env("DIRECT_URL")
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  image        String
+  summary      String
+  description  String   @db.Text
+  stack        String[]
+  liveUrl      String?
+  githubUrl    String?
+  challenges   String   @db.Text
+  improvements String   @db.Text
+  /// lower numbers show first on the homepage; ties broken by newest first
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

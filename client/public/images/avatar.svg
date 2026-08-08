@@ -1,0 +1,20 @@
+<svg width="480" height="480" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1C2621"/>
+      <stop offset="1" stop-color="#0E1512"/>
+    </linearGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFB454"/>
+      <stop offset="1" stop-color="#C98A3B"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="480" rx="28" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="479" height="479" rx="27.5" fill="none" stroke="#293630"/>
+  <circle cx="240" cy="190" r="82" fill="url(#fig)" opacity="0.9"/>
+  <path d="M90 430c0-90 67-150 150-150s150 60 150 150" fill="url(#fig)" opacity="0.9"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#6FE3B4" font-size="16">
+    <text x="24" y="440">// add your photo</text>
+    <text x="24" y="460">public/images/avatar.jpg</text>
+  </g>
+</svg>
