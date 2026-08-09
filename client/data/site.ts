@@ -12,7 +12,7 @@ export const profile = {
     "A passionate fresher building full stack web apps with the PERN stack. Eager to learn,ready to contribute, and looking for my first opportunity to grow as a developer.",
   location: "Mymensingh, Bangladesh",
   avatar: "/images/profileImage.png",
-  resumeUrl: "/resume.pdf", // drop your resume.pdf into the /public folder with this exact name
+  resumeUrl: "../public/resume.pdf", // drop your resume.pdf into the /public folder with this exact name
   email: "md.minhazuddin.swe@gmail.com",
   phone: "+880 1614861737",
   whatsapp: "+8801614861737",
