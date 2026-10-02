@@ -1,12 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Github, AlertTriangle, Lightbulb } from "lucide-react";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  AlertTriangle,
+  Lightbulb,
+} from "lucide-react";
 import { getProjectBySlug } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const project = await getProjectBySlug(params.slug);
   if (!project) return {};
   return {
@@ -15,7 +25,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function ProjectDetail({ params }: { params: { slug: string } }) {
+export default async function ProjectDetail({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const project = await getProjectBySlug(params.slug);
   if (!project) notFound();
 
@@ -31,7 +45,9 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         </Link>
 
         <p className="path-label mb-3 mt-8">projects/{project.slug}</p>
-        <h1 className="text-3xl font-bold text-paper sm:text-4xl">{project.name}</h1>
+        <h1 className="text-3xl font-bold text-paper sm:text-4xl">
+          {project.name}
+        </h1>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-paper-dim">
           {project.summary}
         </p>
@@ -62,25 +78,37 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         </div>
 
         <div className="relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-xl border border-surface-border">
-          <Image src={project.image} alt={project.name} fill className="object-cover" priority />
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
 
         <div className="mt-10 grid gap-10 md:grid-cols-[1.3fr_0.7fr]">
           <div>
             <h2 className="mb-3 font-mono text-sm text-mint">description</h2>
-            <p className="text-[15px] leading-[1.8] text-paper-dim">{project.description}</p>
+            <p className="text-[15px] leading-[1.8] text-paper-dim">
+              {project.description}
+            </p>
 
             <h2 className="mb-3 mt-9 flex items-center gap-2 font-mono text-sm text-mint">
               <AlertTriangle size={14} className="text-amber" />
               challenges faced
             </h2>
-            <p className="text-[15px] leading-[1.8] text-paper-dim">{project.challenges}</p>
+            <p className="text-[15px] leading-[1.8] text-paper-dim">
+              {project.challenges}
+            </p>
 
             <h2 className="mb-3 mt-9 flex items-center gap-2 font-mono text-sm text-mint">
               <Lightbulb size={14} className="text-amber" />
               future improvements
             </h2>
-            <p className="text-[15px] leading-[1.8] text-paper-dim">{project.improvements}</p>
+            <p className="text-[15px] leading-[1.8] text-paper-dim">
+              {project.improvements}
+            </p>
           </div>
 
           <div>

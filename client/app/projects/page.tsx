@@ -32,11 +32,14 @@ export default async function AllProjectsPage() {
         </Link>
 
         <p className="path-label mb-3 mt-8">projects/all</p>
-        <h1 className="mb-10 text-3xl font-bold text-paper sm:text-4xl">All Projects</h1>
+        <h1 className="mb-10 text-3xl font-bold text-paper sm:text-4xl">
+          All Projects
+        </h1>
 
         {failedToLoad && (
           <p className="rounded-lg border border-surface-border bg-surface px-5 py-4 text-sm text-paper-dim">
-            Couldn't reach the API right now. Make sure the server is running and
+            Couldn't reach the API right now. Make sure the server is running
+            and
             <code className="mx-1 rounded bg-ink px-1.5 py-0.5 font-mono text-xs text-amber">
               NEXT_PUBLIC_API_URL
             </code>
@@ -47,7 +50,10 @@ export default async function AllProjectsPage() {
         {!failedToLoad && projects.length === 0 && (
           <p className="rounded-lg border border-surface-border bg-surface px-5 py-4 text-sm text-paper-dim">
             No projects yet — add your first one from{" "}
-            <Link href="/admin" className="text-mint underline underline-offset-2">
+            <Link
+              href="/admin"
+              className="text-mint underline underline-offset-2"
+            >
               /admin
             </Link>
             .

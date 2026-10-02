@@ -9,6 +9,7 @@ import {
   Facebook,
   Download,
   ArrowDown,
+  Eye,
 } from "lucide-react";
 import { profile } from "@/data/site";
 
@@ -100,6 +101,15 @@ export default function Hero() {
                   Download Résumé
                 </a>
                 <a
+                  href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-surface-border px-5 py-2.5 text-sm font-semibold text-paper transition hover:border-mint hover:text-mint"
+                >
+                  <Eye size={15} />
+                  View Resume
+                </a>
+                <a
                   href="#projects"
                   className="inline-flex items-center gap-2 rounded-md border border-surface-border px-5 py-2.5 text-sm font-semibold text-paper transition hover:border-mint hover:text-mint"
                 >
@@ -128,15 +138,19 @@ export default function Hero() {
 
         {/* Right: photo */}
         <div className="order-1 flex items-center justify-center md:order-2">
-          <div className="animate-rise w-full max-w-[300px] [animation-delay:160ms] md:max-w-sm">
-            <div className="overflow-hidden rounded-2xl border border-surface-border bg-surface shadow-term">
+          <div className="animate-rise relative w-full max-w-[300px] [animation-delay:160ms] md:max-w-sm">
+            {/* ambient glow behind the frame */}
+            <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-br from-mint/20 via-transparent to-amber/20 blur-2xl" />
+
+            <div className="relative overflow-hidden rounded-2xl border border-surface-border bg-surface shadow-term">
               <div className="flex items-center gap-1.5 border-b border-surface-border px-4 py-2.5">
                 <span className="h-2 w-2 rounded-full bg-surface-border" />
                 <span className="ml-2 font-mono text-[11px] text-paper-faint">
                   {profile.name.toLowerCase().replace(/\s+/g, "-")}.jpg
                 </span>
               </div>
-              <div className="relative aspect-square w-full">
+
+              <div className="relative aspect-[4/5] w-full">
                 <Image
                   src={profile.avatar}
                   alt={profile.name}
@@ -144,11 +158,26 @@ export default function Hero() {
                   className="object-cover"
                   priority
                 />
+                {/* vignette: blends the photo's white background into the panel */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface/50 via-transparent to-surface/40" />
               </div>
             </div>
-            <p className="path-label mt-4 text-center opacity-70">
+
+            {/* floating availability badge */}
+            <div className="absolute -bottom-3 -left-3 flex items-center gap-2 rounded-md border border-surface-border bg-surface px-3 py-2 shadow-term">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
+              </span>
+              <span className="font-mono text-[11px] text-paper">
+                Available for work
+              </span>
+            </div>
+
+            {/* <p className="path-label mt-4 text-center opacity-70">
               {profile.location.toLowerCase().replace(/\s+/g, "-")}
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
