@@ -1,14 +1,14 @@
-# Developer Portfolio — PERN Stack (v2)
+# Minhaz Portfolio —
 
 A developer portfolio with a database-backed **Projects** section, a protected
 **admin panel** (add / edit / delete projects), a working **contact form** that
 emails you, **scroll-reveal animations**, and **lazy loading**.
 
-| Layer     | Tech |
-|-----------|------|
-| Frontend  | Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS 4 |
-| Backend   | Node.js · Express 5 · TypeScript (ESM) · Zod 4 · Nodemailer |
-| Database  | PostgreSQL on [Neon](https://neon.tech) · Prisma 7 (driver adapter) |
+| Layer    | Tech                                                                        |
+| -------- | --------------------------------------------------------------------------- |
+| Frontend | Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS 4 |
+| Backend  | Node.js · Express 5 · TypeScript (ESM) · Zod 4 · Nodemailer                 |
+| Database | PostgreSQL on [Neon](https://neon.tech) · Prisma 7 (driver adapter)         |
 
 ```
 portfolio-pern/
@@ -23,16 +23,16 @@ lives in **`client/data/site.ts`**. Projects live in the database and are manage
 
 ## Versions (all latest at the time of writing)
 
-| Package | Version | | Package | Version |
-|---|---|---|---|---|
-| Node.js (required) | **≥ 22.12** | | Express | 5.3.0 |
-| Next.js | 16.4.0 | | Prisma + client + pg adapter | 7.10.0 |
-| React / React DOM | 19.3.0 | | Zod | 4.6.5 |
-| Tailwind CSS | 4.3.3 | | Nodemailer | 10.0.16 |
-| lucide-react | 1.54.0 | | dotenv | 18.0.7 |
-| TypeScript — **server** | 7.0.2 | | tsx | 4.23.15 |
-| TypeScript — **client** | 6.0.3 | | concurrently | 10.0.6 |
-| ESLint — client | 9.39.5 | | pg | 8.23.1 |
+| Package                 | Version     |     | Package                      | Version |
+| ----------------------- | ----------- | --- | ---------------------------- | ------- |
+| Node.js (required)      | **≥ 22.12** |     | Express                      | 5.3.0   |
+| Next.js                 | 16.4.0      |     | Prisma + client + pg adapter | 7.10.0  |
+| React / React DOM       | 19.3.0      |     | Zod                          | 4.6.5   |
+| Tailwind CSS            | 4.3.3       |     | Nodemailer                   | 10.0.16 |
+| lucide-react            | 1.54.0      |     | dotenv                       | 18.0.7  |
+| TypeScript — **server** | 7.0.2       |     | tsx                          | 4.23.15 |
+| TypeScript — **client** | 6.0.3       |     | concurrently                 | 10.0.6  |
+| ESLint — client         | 9.39.5      |     | pg                           | 8.23.1  |
 
 Three places are intentionally **not** the newest release — each for a concrete reason:
 
@@ -54,7 +54,7 @@ Three places are intentionally **not** the newest release — each for a concret
 ## 2. Create the database (Neon)
 
 1. Create a project on [neon.tech](https://neon.tech).
-2. In **Connection Details**, copy two strings (toggle *Pooled connection*):
+2. In **Connection Details**, copy two strings (toggle _Pooled connection_):
    - **pooled** → `DATABASE_URL` (used by the running API)
    - **direct** (pooling off) → `DIRECT_URL` (used by Prisma Migrate)
 
@@ -95,9 +95,10 @@ npm run dev
 
 ---
 
-## What's new in v2
+## What's new in this portfolio
 
 ### Scroll reveal (fade-in on scroll)
+
 `client/components/Reveal.tsx` wraps any block and animates it in the first time it
 scrolls into view (IntersectionObserver — no scroll listeners).
 
@@ -108,10 +109,11 @@ scrolls into view (IntersectionObserver — no scroll listeners).
 ```
 
 Cards use `delay={index * 110}` to stagger. The animation itself is plain CSS
-(`.reveal` in `globals.css`). It is skipped for visitors with *reduce motion* enabled,
+(`.reveal` in `globals.css`). It is skipped for visitors with _reduce motion_ enabled,
 and a `<noscript>` rule keeps content visible if JavaScript is off.
 
 ### Lazy loading
+
 - **Images** — project-card images are `loading="lazy"` with responsive `sizes`; the
   above-the-fold hero image loads eagerly.
 - **Code splitting** — the contact form (`next/dynamic`) and the admin edit-modal are
@@ -120,6 +122,7 @@ and a `<noscript>` rule keeps content visible if JavaScript is off.
   so a slow API (e.g. Render's free tier waking up) never blocks the rest of the page.
 
 ### Also
+
 - Server: trailing slashes in `CLIENT_ORIGIN` are stripped automatically (the classic
   post-deploy CORS bug), several origins can be comma-separated, `trust proxy` is on so
   the contact-form rate limit sees real visitor IPs, and the admin password check is
@@ -128,27 +131,17 @@ and a `<noscript>` rule keeps content visible if JavaScript is off.
 
 ---
 
-## Upgrading an existing v1 install
-
-1. **Upgrade Node to 22.12+** (locally, and on Render/Vercel — see below).
-2. Copy these folders over your project, then delete the old `node_modules` and
-   `package-lock.json` in `client/` and `server/`, and run `npm install` in each.
-3. **Keep your existing `server/prisma/migrations/` folder** — it isn't part of this
-   zip, and Prisma 7 reads it unchanged (same `Project` model, so no new migration).
-4. Your `server/.env` needs **no changes** (same variable names).
-   `DATABASE_URL` is now used by the Prisma 7 driver adapter at runtime;
-   `DIRECT_URL` is used by the CLI (`prisma.config.ts`).
-5. `server/src/generated/` is created by `npm install` — don't commit it (already git-ignored).
-
 ## Deploying
 
 **Server → Render** (Root Directory: `server`)
+
 - Build command: `npm install && npm run build && npx prisma migrate deploy`
 - Start command: `npm start`
 - Environment: everything in `.env.example` (no `PORT`), plus `NODE_VERSION=22`
 - `CLIENT_ORIGIN` = your Vercel URL (trailing slash is now tolerated)
 
 **Client → Vercel** (Root Directory: `client`, Node.js 22.x or newer)
+
 - Environment: `NEXT_PUBLIC_API_URL=https://<your-render-app>.onrender.com/api`
 - Redeploy after changing it — `NEXT_PUBLIC_*` values are baked in at build time.
 
