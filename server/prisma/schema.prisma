@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  image        String
+  summary      String
+  description  String   @db.Text
+  stack        String[]
+  liveUrl      String?
+ clientGithubUrl String? @map("githubUrl")
+  serverGithubUrl String?
+  challenges   String   @db.Text
+  improvements String   @db.Text
+  /// lower numbers show first on the homepage; ties broken by newest first
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────
+   Theme tokens. Values are "R G B" triplets so they can be swapped at
+   runtime (dark ⇄ light) and still work with Tailwind's /opacity modifiers.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  --bg: 14 21 18;
+  --bg-soft: 18 27 23;
+  --surface: 22 31 27;
+  --surface-raised: 28 38 33;
+  --border: 41 54 48;
+  --text: 236 235 227;
+  --text-dim: 183 189 180;
+  --text-faint: 124 133 125;
+  --amber: 255 180 84;
+  --amber-dim: 201 138 59;
+  --mint: 111 227 180;
+  --mint-dim: 62 143 110;
+  --shadow-color: 0 0 0;
+  --shadow-alpha: 0.6;
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: 246 245 240;
+  --bg-soft: 240 239 232;
+  --surface: 255 255 255;
+  --surface-raised: 250 249 244;
+  --border: 224 221 209;
+  --text: 26 31 28;
+  --text-dim: 74 82 76;
+  --text-faint: 118 126 114;
+  --amber: 196 108 26;
+  --amber-dim: 158 87 21;
+  --mint: 22 122 91;
+  --mint-dim: 16 92 69;
+  --shadow-color: 30 30 26;
+  --shadow-alpha: 0.1;
+
+  color-scheme: light;
+}
+
+/* Expose the tokens as Tailwind utilities (bg-ink, text-paper, border-surface-border, …) */
+@theme inline {
+  --color-ink: rgb(var(--bg));
+  --color-ink-soft: rgb(var(--bg-soft));
+  --color-surface: rgb(var(--surface));
+  --color-surface-raised: rgb(var(--surface-raised));
+  --color-surface-border: rgb(var(--border));
+  --color-paper: rgb(var(--text));
+  --color-paper-dim: rgb(var(--text-dim));
+  --color-paper-faint: rgb(var(--text-faint));
+  --color-amber: rgb(var(--amber));
+  --color-amber-dim: rgb(var(--amber-dim));
+  --color-mint: rgb(var(--mint));
+  --color-mint-dim: rgb(var(--mint-dim));
+
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --shadow-term: 0 0 0 1px rgb(var(--border) / 0.5),
+    0 20px 60px -20px rgb(var(--shadow-color) / var(--shadow-alpha));
+
+  --animate-blink: blink 1s steps(1) infinite;
+  --animate-rise: rise 0.6s ease-out both;
+  --animate-float-slow: floatSlow 14s ease-in-out infinite;
+  --animate-float-slower: floatSlower 18s ease-in-out infinite;
+
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes rise {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes floatSlow {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-30px, 30px);
+    }
+  }
+  @keyframes floatSlower {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(30px, -20px);
+    }
+  }
+}
+
+@utility bg-grid-fade {
+  background-image: linear-gradient(180deg, rgb(255 180 84 / 0.06) 0%, rgb(255 180 84 / 0) 60%);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* keeps section headings from hiding behind the sticky navbar when jumping
+   to an anchor (direct links, back/forward, etc.) */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+::selection {
+  background: rgb(var(--amber));
+  color: rgb(var(--bg));
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgb(var(--amber));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.path-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: rgb(var(--mint));
+}
+
+.path-label::before {
+  content: "~/";
+  color: rgb(var(--mint-dim));
+}
+
+/* theme toggle: show the sun in dark mode, the moon in light mode */
+.theme-icon-moon {
+  display: none;
+}
+[data-theme="light"] .theme-icon-sun {
+  display: none;
+}
+[data-theme="light"] .theme-icon-moon {
+  display: inline;
+}
+
+/* ─── Scroll reveal ────────────────────────────────────────────────
+   <Reveal> adds .is-visible once the element scrolls into view.
+   Direction/delay/duration come from data-variant and CSS variables.   */
+.reveal {
+  --reveal-x: 0px;
+  --reveal-y: 0px;
+  --reveal-scale: 1;
+  opacity: 0;
+  transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(var(--reveal-scale));
+  transition:
+    opacity var(--reveal-duration, 700ms) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform var(--reveal-duration, 700ms) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal[data-variant="up"] {
+  --reveal-y: 28px;
+}
+.reveal[data-variant="down"] {
+  --reveal-y: -28px;
+}
+.reveal[data-variant="left"] {
+  --reveal-x: -36px;
+}
+.reveal[data-variant="right"] {
+  --reveal-x: 36px;
+}
+.reveal[data-variant="zoom"] {
+  --reveal-scale: 0.94;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

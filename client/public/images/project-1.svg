@@ -1,0 +1,18 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#161F1B"/>
+  <rect x="0.5" y="0.5" width="799" height="499" fill="none" stroke="#293630"/>
+  <g opacity="0.5">
+    <rect x="60" y="90" width="200" height="28" rx="6" fill="#293630"/>
+    <rect x="60" y="140" width="200" height="120" rx="10" fill="#1C2621" stroke="#293630"/>
+    <rect x="300" y="90" width="200" height="28" rx="6" fill="#293630"/>
+    <rect x="300" y="140" width="200" height="220" rx="10" fill="#1C2621" stroke="#293630"/>
+    <rect x="540" y="90" width="200" height="28" rx="6" fill="#293630"/>
+    <rect x="540" y="140" width="200" height="80" rx="10" fill="#1C2621" stroke="#293630"/>
+  </g>
+  <circle cx="90" cy="180" r="6" fill="#FFB454"/>
+  <circle cx="330" cy="180" r="6" fill="#6FE3B4"/>
+  <circle cx="570" cy="180" r="6" fill="#FFB454"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7C857D" font-size="18">
+    <text x="60" y="440">taskflow / board.tsx</text>
+  </g>
+</svg>
