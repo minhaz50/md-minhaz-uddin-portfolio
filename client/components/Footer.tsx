@@ -3,6 +3,8 @@
 import { ArrowUp, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { profile } from "@/data/site";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -23,6 +25,7 @@ const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIC
 )}&su=${encodeURIComponent("Let's connect")}`;
 
 export default function Footer() {
+  const base = usePathname() === "/" ? "" : "/";
   return (
     <footer className="border-t border-surface-border px-5 pt-14 md:px-8">
       <div className="mx-auto max-w-6xl">
@@ -33,7 +36,9 @@ export default function Footer() {
               {profile.name.split(" ")[0]}
               <span className="text-amber">.</span>
             </p>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-paper-dim">{profile.tagline}</p>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-paper-dim">
+              {profile.tagline}
+            </p>
             <div className="mt-5 flex items-center gap-2.5">
               <a
                 href={profile.socials.github}
@@ -53,7 +58,11 @@ export default function Footer() {
               >
                 <LinkedinIcon size={16} />
               </a>
-              <a href={`mailto:${profile.email}`} aria-label="Email" className={socialButton}>
+              <a
+                href={`mailto:${profile.email}`}
+                aria-label="Email"
+                className={socialButton}
+              >
                 <Mail size={16} />
               </a>
             </div>
@@ -65,9 +74,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-sm text-paper-dim transition hover:text-mint">
+                  <Link
+                    href={`${base}${link.href}`}
+                    className="text-sm text-paper-dim transition hover:text-mint"
+                  >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -75,7 +87,9 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <p className="text-sm font-semibold text-paper">Let&apos;s Connect</p>
+            <p className="text-sm font-semibold text-paper">
+              Let&apos;s Connect
+            </p>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-paper-dim">
               Always open to new opportunities and interesting projects.
             </p>
@@ -94,8 +108,8 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-surface-border py-6 sm:flex-row">
           <p className="text-center text-sm text-paper-faint sm:text-left">
-            © {new Date().getFullYear()} {profile.name}. Built with <span className="text-red-400">♥</span>{" "}
-            using Next.js &amp; Express.
+            © {new Date().getFullYear()} {profile.name}. Built with{" "}
+            <span className="text-red-400">♥</span> using Next.js &amp; Express.
           </p>
           <button
             type="button"

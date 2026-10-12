@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -13,28 +15,30 @@ const links = [
   { href: "#contact", label: "contact" },
 ];
 
-// Height of the sticky navbar — smooth-scroll targets are offset by this so
-// section headings don't end up hidden underneath it.
 const SCROLL_OFFSET = 72;
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("");
+  const [spy, setSpy] = useState("");
+  const active = isHome ? spy : "";
 
   const navRef = useRef<HTMLElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
-  // Navbar background/blur once the page has scrolled a little.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scrollspy: highlight whichever section sits in the middle band of the viewport.
   useEffect(() => {
+    if (!isHome) return;
+
     const sections = links
       .map((l) => document.querySelector(l.href))
       .filter((el): el is Element => el !== null);
@@ -42,7 +46,7 @@ export default function Navbar() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+          if (entry.isIntersecting) setSpy(`#${entry.target.id}`);
         }
       },
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
@@ -50,10 +54,8 @@ export default function Navbar() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
-  // Slide the pill indicator under the active link. This writes straight to the
-  // DOM (no state), and re-measures if the window is resized.
   useEffect(() => {
     function place() {
       const indicator = indicatorRef.current;
@@ -77,32 +79,41 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", place);
   }, [active]);
 
-  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  function handleNavClick(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) {
+    setOpen(false);
+    if (!isHome) return; // off the home page: let <Link> navigate to "/#section"
+
     const target = document.querySelector(href);
     if (!target) return;
     e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
+    const top =
+      target.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
     window.scrollTo({ top, behavior: "smooth" });
-    setActive(href);
-    setOpen(false);
+    setSpy(href);
     window.history.pushState(null, "", href);
   }
 
   return (
     <header
       className={`sticky top-0 z-50 border-b backdrop-blur-sm transition-colors ${
-        scrolled ? "border-surface-border bg-ink/95" : "border-transparent bg-ink/70"
+        scrolled
+          ? "border-surface-border bg-ink/95"
+          : "border-transparent bg-ink/70"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:px-8">
-        <a
-          href="#top"
+        <Link
+          href={isHome ? "#top" : "/"}
           className="flex items-center gap-2 font-mono text-sm text-paper"
           onClick={(e) => {
+            setOpen(false);
+            if (!isHome) return; // off the home page: go to "/"
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
-            setActive("");
-            setOpen(false);
+            setSpy("");
             window.history.pushState(null, "", "#top");
           }}
         >
@@ -113,28 +124,33 @@ export default function Navbar() {
           </span>
           <span className="text-paper-dim">portfolio</span>
           <span className="text-mint">.sh</span>
-        </a>
+        </Link>
 
-        <nav ref={navRef} className="relative hidden items-center gap-1 md:flex">
+        <nav
+          ref={navRef}
+          className="relative hidden items-center gap-1 md:flex"
+        >
           <span
             ref={indicatorRef}
             aria-hidden="true"
             className="absolute top-0.5 left-0 h-[calc(100%-4px)] rounded-sm bg-surface opacity-0 transition-[transform,width,opacity] duration-300 ease-out"
           />
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               ref={(el) => {
                 linkRefs.current[l.href] = el;
               }}
-              href={l.href}
+              href={isHome ? l.href : `/${l.href}`}
               onClick={(e) => handleNavClick(e, l.href)}
               className={`relative z-10 rounded-sm px-3 py-1.5 font-mono text-[13px] transition-colors ${
-                active === l.href ? "text-mint" : "text-paper-dim hover:text-paper"
+                active === l.href
+                  ? "text-mint"
+                  : "text-paper-dim hover:text-paper"
               }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <ThemeToggle className="relative z-10 ml-2" />
         </nav>
@@ -156,16 +172,18 @@ export default function Navbar() {
       {open && (
         <nav className="flex flex-col gap-1 border-t border-surface-border bg-ink px-5 pt-2 pb-4 md:hidden">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
-              href={l.href}
+              href={isHome ? l.href : `/${l.href}`}
               onClick={(e) => handleNavClick(e, l.href)}
               className={`rounded-sm px-2 py-2.5 font-mono text-sm transition-colors ${
-                active === l.href ? "bg-surface text-mint" : "text-paper-dim hover:bg-surface hover:text-mint"
+                active === l.href
+                  ? "bg-surface text-mint"
+                  : "text-paper-dim hover:bg-surface hover:text-mint"
               }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
       )}
